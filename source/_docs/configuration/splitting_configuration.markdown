@@ -10,15 +10,15 @@ footer: true
 redirect_from: /topics/splitting_configuration/
 ---
 
-So you've been using Home Assistant for a while now and your [configuration.yaml file brings people to tears](https://home-assistant.io/cookbook/configuration_yaml_from_bassclarinetl2/) or you simply want to start off with the distributed approach, here's how to "split the configuration.yaml" into more manageable (read: humanly readable) pieces.
+So you've been using Home Assistant for a while now and your [configuration.yaml file brings people to tears](https://home-assistant.io/cookbook/configuration_yaml_from_bassclarinetl2/) or you simply want to start off with the distributed approach. Here's how to "split the configuration.yaml" into more manageable (i.e., humanly readable) pieces.
 
-First off, several community members have sanitized (read: without api keys/passwords etc) versions of their configurations available for viewing, you can see a list of them [here](https://home-assistant.io/cookbook/#example-configurationyaml).
+First off, several community members have sanitized (without API keys/passwords, etc.) versions of their configurations available for viewing. You can see a list of them [here](https://home-assistant.io/cookbook/#example-configurationyaml).
 
 As commenting code doesn't always happen, please read on for the details.
 
-Now despite the logical assumption that the `configuration.yaml` will be replaced by this process it will in fact remain, albeit in a much less cluttered form.
+Now despite the logical assumption that the `configuration.yaml` will be replaced by this process, it will in fact remain, albeit in a much less cluttered form.
 
-In this lighter version we will still need what could be called the core snippet:
+In this lighter version, we will still need what could be called the core snippet:
 
 ```yaml
 homeassistant:
@@ -34,9 +34,9 @@ homeassistant:
   customize: !include customize.yaml
 ```
 
-Note that each line after `homeassistant:` is indented two (2) spaces. Since the configuration files in Home Assistant are based on the YAML language, indentation and spacing are important. Also note that seemingly strange entry under `customize:`.
+Note that each line after `homeassistant:` is indented two spaces. Since the configuration files in Home Assistant are based on the YAML language, indentation and spacing are important. Also note that seemingly strange entry under `customize:`.
 
-`!include filename.yaml` is the statement that tells Home Assistant to insert the contents of `filename.yaml` at that point. This is how we are going to break a monolithic and hard to read file (when it gets big) into more manageable chunks.
+`!include filename.yaml` is the statement that tells Home Assistant to insert the contents of `filename.yaml` at that point. This is how we are going to break a monolithic and hard-to-read file (when it gets big) into more manageable chunks.
 
 Now before we start splitting out the different components, let's look at the other components (in our example) that will stay in the base file:
 
@@ -62,11 +62,11 @@ zwave:
 mqtt:
   broker: 127.0.0.1
 ```
-As with the core snippet, indentation makes a difference. The component headers (`mqtt:`) should be fully left aligned (aka no indent), and the parameters (`broker:`) should be indented two (2) spaces.
+As with the core snippet, indentation makes a difference. The component headers (`mqtt:`) should be fully left aligned (no indent), and the parameters (`broker:`) should be indented two spaces.
 
-While some of these components can technically be moved to a separate file they are so small or "one off's" where splitting them off is superfluous. Also, you'll notice the # symbol (hash/pound). This represents a "comment" as far as the commands are interpreted. Put another way, any line prefixed with a `#` will be ignored. This makes breaking up files for human readability really convenient, not to mention turning off features while leaving the entry intact. (Look at the `zigbee:` entry above and the b entry further down)
+While some of these components can technically be moved to a separate file, they are so small that splitting them off would be superfluous. Also, you'll notice the # symbol (hash/pound). This represents a "comment" as far as the commands are interpreted. Put another way, any line prefixed with a `#` will be ignored. This makes breaking up files for human readability really convenient, not to mention turning off features while leaving the entry intact. (Look at the `zigbee:` entry above and the b entry further down.)
 
-Now, lets assume that a blank file has been created in the Home Assistant configuration directory for each of the following:
+Now, let's assume that a blank file has been created in the Home Assistant configuration directory for each of the following:
 
 ```text
 automation.yaml
@@ -77,9 +77,9 @@ device_tracker.yaml
 customize.yaml
 ```
 
-`automation.yaml` will hold all the automation component details. `zones.yaml` will hold the zone component details and so forth. These files can be called anything but giving them names that match their function will make things easier to keep track of.
+`automation.yaml` will hold all the automation component details. `zones.yaml` will hold the zone component details, and so forth. These files can be called anything, but giving them names that match their function will make things easier to keep track of.
 
-Inside the base configuration file add the following entries:
+Inside the base configuration file, add the following entries:
 
 ```yaml
 automation: !include automation.yaml
@@ -89,9 +89,9 @@ switch: !include switches.yaml
 device_tracker: !include device_tracker.yaml
 ```
 
-Note that there can only be one `!include:` for each component so chaining them isn't going to work. If that sounds like greek, don't worry about it.
+Note that there can only be one `!include:` for each component, so chaining them isn't going to work. If that sounds like Greek, don't worry about it.
 
-Alright, so we've got the single components and the include statements in the base file, what goes in those extra files?
+Now that we have the single components and the include statements in the base file, what goes in those extra files?
 
 Let's look at the `device_tracker.yaml` file from our example:
 
@@ -106,7 +106,7 @@ Let's look at the `device_tracker.yaml` file from our example:
   consider_home: 120
 ```
 
-This small example illustrates how the "split" files work. In this case, we start with a "comment block" identifying the file followed by two (2) device tracker entries (`owntracks` and `nmap`). These files follow ["style 1"](/getting-started/devices/#style-2-list-each-device-separately) that is to say a fully left aligned leading entry (`- platform: owntracks`) followed by the parameter entries indented two (2) spaces.
+This small example illustrates how the "split" files work. In this case, we start with a "comment block" identifying the file, followed by two device tracker entries (`owntracks` and `nmap`). These files follow ["style 1"](/getting-started/devices/#style-2-list-each-device-separately); that is to say, a fully left-aligned leading entry (`- platform: owntracks`) followed by the parameter entries indented two spaces.
 
 This (large) sensor configuration gives us another example:
 
@@ -152,7 +152,7 @@ You'll notice that this example includes a secondary parameter section (under th
 
 That about wraps it up.
 
-If you have issues checkout `home-assistant.log` in the configuration directory as well as your indentations. If all else fails, head over to our [Discord chat server][discord] and ask away.
+If you have issues, check out `home-assistant.log` in the configuration directory as well as your indentations. If all else fails, head over to our [Discord chat server][discord] and ask away.
 
 ### {% linkable_title Debugging multiple configuration files %}
 
@@ -168,10 +168,10 @@ You can get help from the command line using: `hass --script check_config --help
 We offer four advanced options to include whole directories at once.
 - `!include_dir_list` will return the content of a directory as a list with each file content being an entry in the list.
 - `!include_dir_named` will return the content of a directory as a dictionary which maps filename => content of file.
-- `!include_dir_merge_list` will return the content of a directory as a list by merging all files (which should contain a list) into 1 big list.
-- `!include_dir_merge_named` will return the content of a directory as a dictionary by loading each file and merging it into 1 big dictionary.
+- `!include_dir_merge_list` will return the content of a directory as a list by merging all files (which should contain a list) into one big list.
+- `!include_dir_merge_named` will return the content of a directory as a dictionary by loading each file and merging it into one big dictionary.
 
-These work recursively. As an example using `!include_dir_* automation`, will include all 6 files shown below:
+These work recursively. As an example, using `!include_dir_* automation` will include all six files shown below:
 
 ```bash
 .
